@@ -1,0 +1,33 @@
+{
+  "name": "music_manager",
+  "version": "1.0.0",
+  "description": "Music Album Manager",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marb61a/music_manager.git"
+  },
+  "author": "Martin",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "firebase": "*",
+    "morgan": "*",
+    "multer": "*",
+    "path": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/marb61a/music_manager/issues"
+  },
+  "homepage": "https://github.com/marb61a/music_manager"
+}
