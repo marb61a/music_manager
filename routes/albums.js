@@ -26,4 +26,36 @@ router.get('./add', function(req, res, next) {
 	});
 });
 
+router.post('./add', upload.single('cover'), function(req, res, next){
+	// Check for file upload
+	if(req.file){
+		console.log('Uploading File...');
+	  	var cover = req.file.filename;
+	} else{
+		console.log('No File Uploaded...');
+	  	var cover = 'noimage.jpg';
+	}
+	
+	// Build an album object
+	var album = {
+		artist: req.body.artist,
+		title: req.body.title,
+		genre: req.body.genre,
+		info: req.body.info,
+		year: req.body.year,
+		label: req.body.label,
+		tracks: req.body.tracks,
+		cover: cover,
+	};
+	
+	// Create Reference
+	var albumRef = fbRef.child("albums");
+
+	// Push Album
+  	albumRef.push().set(album);
+
+  	req.flash('success_msg', 'Album Saved');
+  	res.redirect('/albums');
+});
+
 module.exports = router;
