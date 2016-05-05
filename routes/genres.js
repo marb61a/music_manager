@@ -36,4 +36,25 @@ router.post('./add', function(req, res, naxt){
   	res.redirect('/genres');
 });
 
+router.get('/edit/:id', function(req, res, next) {
+    var id = req.params.id;
+    var genreRef = new Firebase('' + id);
+    genreRef.once('value', function(snapshot){
+        var genre = snapshot.val();
+        res.render('genres/edit', {genre: genre, id: id});
+    });
+});
+
+router.post('/edit/:id', function(req, res, naxt) {
+    var id = req.params.id;
+    var name = req.body.name;
+    var genreRef = new Firebase('' + id);
+    
+    genreRef.update({
+        name : name
+    });
+    
+    res.redirect('/genres');
+});
+
 module.exports = router;
