@@ -4,7 +4,21 @@ var Firebase = require('firebase');
 var fbRef = new Firebase('');
 
 router.get('/', function(req, res, next) {
-  	res.render('genres/index');
+    var genreRef = fbRef.child('genres');
+    
+    genreRef.once('value', function(snapshot){
+        var genres = [];
+        snapshot.forEach(function(childSnapshot){
+            var key = childSnapshot.key();
+			var childData = childSnapshot.val();
+			genres.push({
+				id: key,
+				name: childData.name
+			});
+        });
+        
+        res.render('genres/index');
+    });
 });
 
 router.get('/add', function(req, res, next) {
