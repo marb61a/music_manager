@@ -57,4 +57,12 @@ router.post('/edit/:id', function(req, res, naxt) {
     res.redirect('/genres');
 });
 
+router.delete('/delete/:id', function(req, res, next){
+    var id = req.params.id;
+    var genreRef = new Firebase('' + id);
+    genreRef.remove();
+	req.flash('success_msg','Genre Deleted');
+	res.send(200);
+});
+
 module.exports = router;
