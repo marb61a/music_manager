@@ -66,7 +66,7 @@ router.post('./add', upload.single('cover'), function(req, res, next){
 		year: req.body.year,
 		label: req.body.label,
 		tracks: req.body.tracks,
-		cover: cover,
+		cover: cover
 	};
 	
 	// Create Reference
@@ -113,6 +113,39 @@ router.get('/edit/:id', function(req, res, next) {
         	});
         });
     });
+});
+
+router.post('/edit/:id', upload.single('cover'), function(req, res, next) {
+    var id = req.params.id;
+    var albumRef = new Firebase(''+ id);
+    
+    // Check for file upload
+    if(req.file){
+    	// Get the cover filename
+    	var cover = req.file.filename;
+    	// Update the album with a cover
+    	albumRef.update({
+    		artist: req.body.artist,
+			title: req.body.title,
+			genre: req.body.genre,
+			info: req.body.info,
+			year: req.body.year,
+			label: req.body.label,
+			tracks: req.body.tracks,
+			cover: cover
+    	});
+    }else{
+    	// Update the album with no cover
+    	albumRef.update({
+    		artist: req.body.artist,
+			title: req.body.title,
+			genre: req.body.genre,
+			info: req.body.info,
+			year: req.body.year,
+			label: req.body.label,
+			tracks: req.body.tracks
+    	});
+    }
 });
 
 module.exports = router;
