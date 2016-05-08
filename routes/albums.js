@@ -6,7 +6,28 @@ var multer = require('multer');
 var upload = multer({dest:'./public/images/uploads'});
 
 router.get('/', function(req, res, next) {
-  	res.render('albums/index');
+  	var albumRef = fbRef.child('albums');
+  	
+  	albumRef.once('value', function(snapshot) {
+  	    var albums = [];
+		snapshot.forEach(function(childSnapshot){
+			var key = childSnapshot.key();
+			var childData = childSnapshot.val();
+			if(childData.uid == fbRef.getAuth().uid){
+				albums.push({
+					id: key,
+					artist: childData.artist,
+					genre: childData.genre,
+					info: childData.info,
+					title: childData.title,
+					label: childData.label,
+					tracks: childData.tracks,
+					cover: childData.cover
+				});
+			}
+		});
+		res.render('albums/index',{albums: albums});
+  	});
 });
 
 router.get('./add', function(req, res, next) {
