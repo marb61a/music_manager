@@ -89,4 +89,30 @@ router.get('/details/:id', function(req, res) {
     });
 });
 
+router.get('/edit/:id', function(req, res, next) {
+    var id = req.params.id;
+    var albumRef = new Firebase(''+ id);
+    var genreRef = fbRef.child('genres');
+    
+    genreRef.once('value', function(snapshot) {
+        var genres = [];
+        snapshot.forEach(function(childSnapshot){
+        	var key = childSnapshot.key();
+        	var childData = childSnapshot.val();
+			genres.push({
+				id: key,
+				name: childData.name
+			});
+        });
+        albumRef.once('value', function(snapshot){
+        	var album = snapshot.val();
+        	res.render({
+        		album: album, 
+        		id: id, 
+        		genres: genres
+        	});
+        });
+    });
+});
+
 module.exports = router;
