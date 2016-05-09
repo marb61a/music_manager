@@ -7,7 +7,7 @@ var session = require('express-session');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var Firebase = require('firebase');
-var fbRef = new Firebase('');
+var fbRef = new Firebase('https://musicmanager.firebaseio.com');
 
 // Route Files
 var routes = require('./routes/index');
@@ -74,7 +74,7 @@ app.use(function (req, res, next) {
 // Get User Info
 app.get('*', function(req, res, next){
   if(fbRef.getAuth() != null){
-    var userRef = new Firebase('');
+    var userRef = new Firebase('https://musicmanager.firebaseio.com/users');
     userRef.orderByChild('uid').startAt(fbRef.getAuth().uid).endAt(fbRef.getAuth().uid).on('child_added', function(snapshot){
       res.locals.user = snapshot.val();
     });   

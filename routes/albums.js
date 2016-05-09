@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Firebase = require('firebase');
-var fbRef = new Firebase('');
+var fbRef = new Firebase('https://musicmanager.firebaseio.com/');
 var multer = require('multer');
 var upload = multer({dest:'./public/images/uploads'});
 
@@ -90,7 +90,7 @@ router.post('./add', upload.single('cover'), function(req, res, next){
 router.get('/details/:id', function(req, res) {
     var id = req.params.id;
     
-    var albumRef = new Firebase(''+ id);
+    var albumRef = new Firebase('https://musicmanager.firebaseio.com/albums/'+ id);
     albumRef.once('value', function(snapshot){
     	var album = snapshot.val();
 		res.render('albums/details', {album: album, id:id});	
@@ -99,7 +99,7 @@ router.get('/details/:id', function(req, res) {
 
 router.get('/edit/:id', function(req, res, next) {
     var id = req.params.id;
-    var albumRef = new Firebase(''+ id);
+    var albumRef = new Firebase('https://musicmanager.firebaseio.com/albums/'+ id);
     var genreRef = fbRef.child('genres');
     
     genreRef.once('value', function(snapshot) {
@@ -125,7 +125,7 @@ router.get('/edit/:id', function(req, res, next) {
 
 router.post('/edit/:id', upload.single('cover'), function(req, res, next) {
     var id = req.params.id;
-    var albumRef = new Firebase(''+ id);
+    var albumRef = new Firebase('https://musicmanager.firebaseio.com/albums/'+ id);
     
     // Check for file upload
     if(req.file){
@@ -158,7 +158,7 @@ router.post('/edit/:id', upload.single('cover'), function(req, res, next) {
 
 router.delete('/delete/:id', function(req, res, next) {
 	var id = req.params.id;
-	var albumRef = new Firebase(''+id);
+	var albumRef = new Firebase('https://musicmanager.firebaseio.com/albums/'+id);
 
 	albumRef.remove();
 
