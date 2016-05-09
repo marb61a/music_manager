@@ -5,6 +5,14 @@ var fbRef = new Firebase('');
 var multer = require('multer');
 var upload = multer({dest:'./public/images/uploads'});
 
+router.get('*', function(req, res, next) {
+	// Check Authentication
+	if(fbRef.getAuth() == null){
+	  	res.redirect('/users/login');
+	}
+	next();
+});
+
 router.get('/', function(req, res, next) {
   	var albumRef = fbRef.child('albums');
   	

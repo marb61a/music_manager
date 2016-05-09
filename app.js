@@ -66,6 +66,20 @@ app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.authdata = fbRef.getAuth();
+  res.locals.page = req.url;
+  next();
+});
+
+// Get User Info
+app.get('*', function(req, res, next){
+  if(fbRef.getAuth() != null){
+    var userRef = new Firebase('');
+    userRef.orderByChild('uid').startAt(fbRef.getAuth().uid).endAt(fbRef.getAuth().uid).on('child_added', function(snapshot){
+      res.locals.user = snapshot.val();
+    });   
+  }
+
   next();
 });
 
