@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Firebase = require('firebase');
-var fbRef = new Firebase('');
+var fbRef = new Firebase('https://musicmanager.firebaseio.com/');
 
 router.get('/', function(req, res, next) {
     var genreRef = fbRef.child('genres');
@@ -38,7 +38,7 @@ router.post('./add', function(req, res, naxt){
 
 router.get('/edit/:id', function(req, res, next) {
     var id = req.params.id;
-    var genreRef = new Firebase('' + id);
+    var genreRef = new Firebase('https://musicmanager.firebaseio.com/genres/' + id);
     genreRef.once('value', function(snapshot){
         var genre = snapshot.val();
         res.render('genres/edit', {genre: genre, id: id});
@@ -48,7 +48,7 @@ router.get('/edit/:id', function(req, res, next) {
 router.post('/edit/:id', function(req, res, naxt) {
     var id = req.params.id;
     var name = req.body.name;
-    var genreRef = new Firebase('' + id);
+    var genreRef = new Firebase('https://musicmanager.firebaseio.com/genres' + id);
     
     genreRef.update({
         name : name
@@ -59,7 +59,7 @@ router.post('/edit/:id', function(req, res, naxt) {
 
 router.delete('/delete/:id', function(req, res, next){
     var id = req.params.id;
-    var genreRef = new Firebase('' + id);
+    var genreRef = new Firebase('https://musicmanager.firebaseio.com/genres/' + id);
     genreRef.remove();
 	req.flash('success_msg','Genre Deleted');
 	res.send(200);

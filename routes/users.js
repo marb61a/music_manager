@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Firebase = require('firebase');
-var fbRef = new Firebase('');
+var fbRef = new Firebase('https://musicmanager.firebaseio.com/');
 
 router.get('/register', function(req, res, next) {
   	res.render('users/register');
