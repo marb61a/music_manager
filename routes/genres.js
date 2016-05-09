@@ -3,6 +3,14 @@ var router = express.Router();
 var Firebase = require('firebase');
 var fbRef = new Firebase('https://musicmanager.firebaseio.com/');
 
+router.get('*', function(req, res, next) {
+	// Check Authentication
+	if(fbRef.getAuth() == null){
+	  	res.redirect('/users/login');
+	}
+	next();
+});
+
 router.get('/', function(req, res, next) {
     var genreRef = fbRef.child('genres');
     
@@ -61,6 +69,7 @@ router.delete('/delete/:id', function(req, res, next){
     var id = req.params.id;
     var genreRef = new Firebase('https://musicmanager.firebaseio.com/genres/' + id);
     genreRef.remove();
+    
 	req.flash('success_msg','Genre Deleted');
 	res.send(200);
 });

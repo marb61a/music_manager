@@ -63,4 +63,13 @@ router.post('/register', function(req, res, next){
 	
 });
 
+// Logout User
+router.get('/logout', function(req, res){
+	// Unauthenticate the client
+	fbRef.unauth();
+
+	req.flash('success_msg', 'You are logged out');
+	res.redirect('/users/login');
+});
+
 module.exports = router;
