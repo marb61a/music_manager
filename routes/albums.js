@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
   	});
 });
 
-router.get('./add', function(req, res, next) {
+router.get('/add', function(req, res, next) {
     var genreRef = fbRef.child('genres');
 
 	genreRef.once('value', function(snapshot){
@@ -55,7 +55,7 @@ router.get('./add', function(req, res, next) {
 	});
 });
 
-router.post('./add', upload.single('cover'), function(req, res, next){
+router.post('/add', upload.single('cover'), function(req, res, next){
 	// Check for file upload
 	if(req.file){
 		console.log('Uploading File...');

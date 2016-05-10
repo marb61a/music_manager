@@ -25,7 +25,10 @@ router.get('/', function(req, res, next) {
 			});
         });
         
-        res.render('genres/index');
+        res.render('genres/index',
+        {
+            genres: genres
+        });
     });
 });
 
@@ -33,7 +36,7 @@ router.get('/add', function(req, res, next) {
   	res.render('genres/add');
 });
 
-router.post('./add', function(req, res, naxt){
+router.post('/add', function(req, res, naxt){
     var genre = {
         name : req.body.name
     };
